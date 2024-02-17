@@ -1,0 +1,16 @@
+# BookCar_Backend
+
+__pycache__/
+*.py[cod]
+
+*.key
+
+.venv
+
+/static/
+
+/media/
+
+*.pyc
+
+.DS_Store
