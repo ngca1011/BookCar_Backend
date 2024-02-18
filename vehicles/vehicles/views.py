@@ -21,7 +21,7 @@ def vehicle_list(request, format=None):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
-@api_view(["GET", "PUT", "DELETE"])
+@api_view(["GET", "PUT", "DELETE", "PATCH"])
 def vehicle_detail(request, id, format=None):
 
     try:
@@ -43,3 +43,11 @@ def vehicle_detail(request, id, format=None):
     elif request.method == "DELETE":
         vehicle.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+    elif request.method == "PATCH":
+        serializer = VehicleSerializer(vehicle, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
