@@ -1,51 +1,44 @@
 from django.http import JsonResponse
-from .models import Vehicle
-from .serializers import VehicleSerializer
+from .models import Customer
+from .serializers import CustomerSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 
 
-@api_view(["GET", "POST"])
-def vehicle_list(request, format=None):
+@api_view(["GET"])
+def customer_list(request, format=None):
 
     if request.method == "GET":
-        vehices = Vehicle.objects.all()
-        serializer = VehicleSerializer(vehices, many=True)
-        return JsonResponse({"vehicles": serializer.data}, safe=False)
-
-    if request.method == "POST":
-        serializer = VehicleSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-
+        customers = Customer.objects.all()
+        serializer = CustomerSerializer(customers, many=True)
+        return JsonResponse({"customers": serializer.data}, safe=False)
 
 @api_view(["GET", "PUT", "DELETE", "PATCH"])
-def vehicle_detail(request, id, format=None):
+def customer_detail(request, id, format=None):
 
     try:
-        vehicle = Vehicle.objects.get(pk=id)
-    except Vehicle.DoesNotExist:
+        customer = Customer.objects.get(pk=id)
+    except Customer.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == "GET":
-        serializer = VehicleSerializer(vehicle)
+        serializer = CustomerSerializer(customer)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     elif request.method == "PUT":
-        serializer = VehicleSerializer(vehicle, request.data)
+        serializer = CustomerSerializer(customer, request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     elif request.method == "DELETE":
-        vehicle.delete()
+        customer.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
     
     elif request.method == "PATCH":
-        serializer = VehicleSerializer(vehicle, data=request.data, partial=True)
+        serializer = CustomerSerializer(customer, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)

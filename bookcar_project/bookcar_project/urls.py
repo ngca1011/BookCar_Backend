@@ -1,5 +1,5 @@
 """
-URL configuration for vehicles project.
+URL configuration for bookcar_project project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.0/topics/http/urls/
@@ -16,13 +16,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from vehicles import views
 from rest_framework.urlpatterns import format_suffix_patterns
+from bookcar_project import customer_app, driver_app
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('vehicles/', views.vehicle_list),
-    path('vehicles/<id>', views.vehicle_detail)
+    path('cabs/', driver_app.views.cab_list),
+    path('cabs/<id>', driver_app.views.cab_detail),
+    path('customers/', customer_app.views.customer_list),
+    path('customers/<id>', customer_app.views.customer_detail),
+    path('drivers/', driver_app.views.driver_list),
+    path('drivers/<id>', driver_app.views.driver_detail),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
