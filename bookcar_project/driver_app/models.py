@@ -1,4 +1,4 @@
-from django.db import models
+from django.contrib.gis.db import models
 import uuid
 from phonenumber_field.modelfields import PhoneNumberField
 
@@ -9,8 +9,7 @@ class Driver(models.Model):
     email = models.EmailField(max_length=100)
     phone_number = PhoneNumberField(null=False, blank=False, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    latitude = models.FloatField(min_value=-90, max_value=90)
-    longitude = models.FloatField(min_value=-180, max_value=180)
+    location = models.PointField()
 
     def __str__(self) -> str:
         return self.name

@@ -20,7 +20,6 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
@@ -42,6 +41,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.gis",
     "rest_framework",
     "driver_app",
     "customer_app",
@@ -85,7 +85,7 @@ WSGI_APPLICATION = "bookcar_project.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
+        "ENGINE": "django.contrib.gis.db.backends.postgis",
         "NAME": "bookcardb",
         "USER": os.getenv("POSTGREST_USERNAME"),
         "PASSWORD": os.getenv("POSTGRES_USER_PASSWORD"),
@@ -135,3 +135,6 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+GDAL_LIBRARY_PATH = r'C:\OSGeo4W\bin\gdal308.dll'
+GEOS_LIBRARY_PATH = r'C:\OSGeo4W\bin\geos_c.dll'

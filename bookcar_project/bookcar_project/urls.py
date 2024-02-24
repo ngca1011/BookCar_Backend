@@ -17,16 +17,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from rest_framework.urlpatterns import format_suffix_patterns
-from bookcar_project import customer_app, driver_app
+from customer_app import views as customer_views
+from driver_app import views as driver_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('cabs/', driver_app.views.cab_list),
-    path('cabs/<id>', driver_app.views.cab_detail),
-    path('customers/', customer_app.views.customer_list),
-    path('customers/<id>', customer_app.views.customer_detail),
-    path('drivers/', driver_app.views.driver_list),
-    path('drivers/<id>', driver_app.views.driver_detail),
+    path('cabs/', driver_views.cab_list),
+    path('cabs/<id>/', driver_views.cab_detail),
+    path('customers/', customer_views.customer_list),
+    path('customers/<id>/', customer_views.customer_detail),
+    path('drivers/', driver_views.driver_list),
+    path('drivers/<id>/', driver_views.driver_detail),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
