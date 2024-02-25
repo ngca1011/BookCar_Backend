@@ -8,13 +8,20 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 
-@api_view(["GET"])
+@api_view(["GET", "POST"])
 def driver_list(request, format=None):
 
     if request.method == "GET":
         drivers = Driver.objects.all()
         serializer = DriverSerializer(drivers, many=True)
         return JsonResponse({"drivers": serializer.data}, safe=False)
+    
+    if request.method == "POST":
+        serializer = DriverSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(["GET", "PUT", "DELETE", "PATCH"])
 def driver_detail(request, id, format=None):
@@ -46,13 +53,20 @@ def driver_detail(request, id, format=None):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(["GET"])
+@api_view(["GET", "POST"])
 def cab_list(request, format=None):
 
     if request.method == "GET":
         cabs = Cab.objects.all()
         serializer = CabSerializer(cabs, many=True)
         return JsonResponse({"cabs": serializer.data}, safe=False)
+    
+    if request.method == "POST":
+        serializer = CabSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(["GET", "PUT", "DELETE", "PATCH"])
 def cab_detail(request, id, format=None):

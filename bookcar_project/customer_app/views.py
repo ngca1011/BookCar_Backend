@@ -6,13 +6,20 @@ from rest_framework.response import Response
 from rest_framework import status
 
 
-@api_view(["GET"])
+@api_view(["GET", "POST"])
 def customer_list(request, format=None):
 
     if request.method == "GET":
         customers = Customer.objects.all()
         serializer = CustomerSerializer(customers, many=True)
         return JsonResponse({"customers": serializer.data}, safe=False)
+
+    if request.method == "POST":
+        serializer = CustomerSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(["GET", "PUT", "DELETE", "PATCH"])
 def customer_detail(request, id, format=None):

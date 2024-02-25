@@ -19,7 +19,8 @@ class Cab(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     driver_id = models.OneToOneField(Driver, on_delete=models.CASCADE)
-    title = models.CharField()
+    title = models.CharField(max_length=20)
+    type = models.CharField(max_length=20, blank = True)
     price_ratio = models.FloatField()
 
     def __str__(self) -> str:
