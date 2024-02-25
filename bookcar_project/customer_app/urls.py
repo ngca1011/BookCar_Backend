@@ -17,10 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.urlpatterns import format_suffix_patterns
+from . import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('customer_app.urls')),
-    path('', include('driver_app.urls', ))
+    path('customers/', views.customer_list),
+    path('customers/<id>/', views.customer_detail),
 ]
 
+urlpatterns = format_suffix_patterns(urlpatterns)
