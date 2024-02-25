@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "django.contrib.gis",
     "rest_framework",
     "rest_framework_gis",
+    "rest_framework.authtoken",
     "driver_app",
     "customer_app",
     "marketplace",

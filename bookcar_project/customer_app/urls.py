@@ -22,6 +22,8 @@ from . import views
 urlpatterns = [
     path('customers/', views.customer_list),
     path('customers/<id>/', views.customer_detail),
+    path('login/', views.user_login),
+    path('register/', views.user_register),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
